@@ -11,11 +11,19 @@ from datetime import datetime as time
 class BaseModel:
     """ class to define all common attributes/methods """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """ initialize an instance """
-        self.id = str(uuid.uuid4())
-        self.created_at = time.now()
-        self.updated_at = self.created_at
+        if kwargs:
+            for key in kwargs.keys():
+                time_format = "%Y-%m-%dT%H:%M:%S.%f"
+                if key in ["created_at", "updated_at"]:
+                    setattr(self, key, time.strptime(kwargs[key], time_format))
+                elif key != "__class__":
+                    setattr(self, key, kwargs[key])
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = time.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """ return the string representation of an instance """
