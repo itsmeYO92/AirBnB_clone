@@ -6,6 +6,7 @@
 
 import uuid
 from datetime import datetime as time
+from models import storage
 
 
 class BaseModel:
@@ -14,16 +15,17 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """ initialize an instance """
         if kwargs:
-            for key in kwargs.keys():
+            for k, v in kwargs.items():
                 time_format = "%Y-%m-%dT%H:%M:%S.%f"
-                if key in ["created_at", "updated_at"]:
-                    setattr(self, key, time.strptime(kwargs[key], time_format))
-                elif key != "__class__":
-                    setattr(self, key, kwargs[key])
+                if k in ["created_at", "updated_at"]:
+                    setattr(self, k, time.strptime(v, time_format))
+                elif k != "__class__":
+                    setattr(self, k, v)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = time.now()
             self.updated_at = self.created_at
+            storage.new(self)
 
     def __str__(self):
         """ return the string representation of an instance """
@@ -32,6 +34,7 @@ class BaseModel:
     def save(self):
         """ modifies the date of update for the instance """
         self.updated_at = time.now()
+        storage.save()
 
     def to_dict(self):
         """ eturns a dictionary containing all keys/values of __dict__ of the instance: """
