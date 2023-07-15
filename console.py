@@ -5,13 +5,14 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """ command line console """
     
     prompt = "(hbnb) "
-    classes = ["BaseModel"]
+    classes = {"BaseModel": BaseModel, "User": User}
     def do_quit(self, line):
         return True
 
@@ -25,10 +26,10 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         if line == "" or line is None:
             print("** class name missing **")
-        elif line not in self.classes:
+        elif line not in self.classes.keys():
             print("** class doesn't exist **")
         else:
-            my_model = BaseModel()
+            my_model = self.classes[line]()
             print("{}".format(my_model.id))
             my_model.save()
 
@@ -38,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = line.split()
-        if args[0] not in self.classes:
+        if args[0] not in self.classes.keys():
             print("** class doesn't exist **")
             return
         elif len(args) < 2:
@@ -59,7 +60,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = line.split()
-        if args[0] not in self.classes:
+        if args[0] not in self.classes.keys():
             print("** class doesn't exist **")
             return
         elif len(args) < 2:
@@ -81,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         if line == "" or line is None:
             line = "all"
         args = line.split()
-        if args[0] not in self.classes and args[0] != "all":
+        if args[0] not in self.classes.keys() and args[0] != "all":
                 print("** class doesn't exist **")
                 return
         
@@ -98,7 +99,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         args = line.split()
-        if args[0] not in self.classes:
+        if args[0] not in self.classes.keys():
             print("** class doesn't exist **")
             return
 

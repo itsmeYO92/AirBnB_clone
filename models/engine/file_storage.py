@@ -36,13 +36,15 @@ class FileStorage:
         
 
         from models.base_model import BaseModel
+        from models.user import User
         
 
+        classes = {"BaseModel": BaseModel, "User": User}
         try:
             with open(self.__file_path, mode="r", encoding="UTF-8") as f:
                 loaded_json = json.load(f)
                 for k, v in loaded_json.items():
-                    loaded_json[k] = BaseModel(**v)
+                    loaded_json[k] = classes[v["__class__"]](**v)
                 self.__objects = dict(loaded_json)
             f.close()
         except FileNotFoundError:
