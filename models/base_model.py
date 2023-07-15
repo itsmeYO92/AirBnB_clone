@@ -29,7 +29,7 @@ class BaseModel:
 
     def __str__(self):
         """ return the string representation of an instance """
-        return "{} ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """ modifies the date of update for the instance """

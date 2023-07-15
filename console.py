@@ -10,7 +10,7 @@ from models.base_model import BaseModel
 class HBNBCommand(cmd.Cmd):
     """ command line console """
     
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     classes = ["BaseModel"]
     def do_quit(self, line):
         return True
@@ -19,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_EOF(self, line):
+        print()
         return True
 
     def do_create(self, line):
@@ -90,5 +91,33 @@ class HBNBCommand(cmd.Cmd):
                 my_list.append(str(v))
 
         print(my_list)
+
+    def do_update(self, line):
+        """ Updates an instance based on the class name and id by adding or updating attribute """
+        if line == "" or line is None:
+            print("** class name missing **")
+            return
+        args = line.split()
+        if args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+
+        key = args[0] + "." + args[1]
+        if key not in storage.all():
+            print("** no instance found **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
+        else:
+            objects = storage.all()
+            setattr(objects[key], args[2].strip('"'), args[3].strip('"'))
+            storage.save()
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
