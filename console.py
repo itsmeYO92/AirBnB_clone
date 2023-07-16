@@ -159,14 +159,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
+        count = 0
         if line in self.classes.keys():
-            count = 0
             for k in storage.all():
                 if line == k.split(".")[0]:
                     count += 1
-            print(count)
-        else:
-            print("** class doesn't exist **")
+        print(count)
 
 
 if __name__ == '__main__':
