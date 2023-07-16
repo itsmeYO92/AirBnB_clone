@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-    BaseModel - a module that defines all common attributes/methods for other classes
+    BaseModel - a module that defines all common
+                attributes/methods for other classes
 """
 
 
@@ -28,8 +29,11 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """ return the string representation of an instance """
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        """
+        return the string representation of an instance
+        """
+        return "[{}] ({}) {}".format(type(self).__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         """ modifies the date of update for the instance """
@@ -37,7 +41,8 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """ eturns a dictionary containing all keys/values of __dict__ of the instance: """
+        """ eturns a dictionary containing all keys/values\
+        of __dict__ of the instance: """
 
         my_dict = self.__dict__.copy()
         my_dict["__class__"] = type(self).__name__

@@ -33,7 +33,6 @@ class FileStorage:
 
     def reload(self):
         """ reload objects from a file """
-        
 
         from models.base_model import BaseModel
         from models.user import User
@@ -43,14 +42,12 @@ class FileStorage:
         from models.place import Place
         from models.review import Review
 
-        
-
         classes = {"BaseModel": BaseModel, "User": User,
-                    "State": State,
-                    "City": City,
-                    "Amenity.py": Amenity,
-                    "Place": Place,
-                    "Review": Review}
+                   "State": State,
+                   "City": City,
+                   "Amenity.py": Amenity,
+                   "Place": Place,
+                   "Review": Review}
         try:
             with open(self.__file_path, mode="r", encoding="UTF-8") as f:
                 loaded_json = json.load(f)
@@ -60,5 +57,3 @@ class FileStorage:
             f.close()
         except FileNotFoundError:
             pass
-
-

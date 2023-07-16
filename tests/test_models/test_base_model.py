@@ -34,6 +34,7 @@ class BaseModelTests(unittest.TestCase):
         model2 = BaseModel(**model1_json)
         model2_json = model2.to_dict()
 
-        self.assertRegex(model1_json["created_at"], r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}$')
+        self.assertRegex(model1_json["created_at"],
+                         r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}$')
         self.assertEqual(model1_json, model2_json)
         self.assertFalse(model1 is model2)

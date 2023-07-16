@@ -16,17 +16,19 @@ from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     """ command line console """
-    
     prompt = "(hbnb) "
     classes = {"BaseModel": BaseModel, "User": User,
-                "State": State,
-                "City": City,
-                "Amenity.py": Amenity,
-                "Place": Place,
-                "Review": Review}
+               "State": State,
+               "City": City,
+               "Amenity.py": Amenity,
+               "Place": Place,
+               "Review": Review}
 
     def precmd(self, line):
-        """ checks if the command is a method call and parse the command to the standard syntax """
+        """
+        checks if the command is a method call and parse\
+        the command to the standard syntax
+        """
         pattern = r"^(\w+)\.(\w+)\((.*)\)"
         match = re.search(pattern, line)
         if match:
@@ -38,12 +40,11 @@ class HBNBCommand(cmd.Cmd):
                 args = arg.split(", ")
                 for i in args:
                     new_args += i.strip('"').strip() + " "
-                    
+
             new_line = "{} {} {}".format(command, __class, new_args)
             return new_line
         else:
             return line
-
 
     def do_quit(self, line):
         return True
@@ -77,10 +78,9 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
             return
-        
-        
+
         objects = storage.all()
-        my_object = objects.get( args[0] + "." + args[1])
+        my_object = objects.get(args[0] + "." + args[1])
         if my_object is not None:
             print(my_object)
         else:
@@ -98,8 +98,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
             return
-        
-        
+
         objects = storage.all()
         key = args[0] + "." + args[1]
         my_object = objects.get(key)
@@ -115,9 +114,9 @@ class HBNBCommand(cmd.Cmd):
             line = "all"
         args = line.split()
         if args[0] not in self.classes.keys() and args[0] != "all":
-                print("** class doesn't exist **")
-                return
-        
+            print("** class doesn't exist **")
+            return
+
         my_list = []
         for k, v in storage.all().items():
             if k.split(".")[0] == args[0] or line == "all":
@@ -126,7 +125,10 @@ class HBNBCommand(cmd.Cmd):
         print(my_list)
 
     def do_update(self, line):
-        """ Updates an instance based on the class name and id by adding or updating attribute """
+        """
+        Updates an instance based on the class name\
+        and id by adding or updating attribute
+        """
         if line == "" or line is None:
             print("** class name missing **")
             return
@@ -165,7 +167,6 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         else:
             print("** class doesn't exist **")
-
 
 
 if __name__ == '__main__':
