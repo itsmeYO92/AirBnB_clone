@@ -3,16 +3,48 @@
 
 
 import cmd
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """ command line console """
     
     prompt = "(hbnb) "
-    classes = {"BaseModel": BaseModel, "User": User}
+    classes = {"BaseModel": BaseModel, "User": User,
+                "State": State,
+                "City": City,
+                "Amenity.py": Amenity,
+                "Place": Place,
+                "Review": Review}
+
+    def precmd(self, line):
+        """ checks if the command is a method call and parse the command to the standard syntax """
+        pattern = r"^(\w+)\.(\w+)\((.*)\)"
+        match = re.search(pattern, line)
+        if match:
+            __class = match.group(1)
+            command = match.group(2)
+            arg = match.group(3)
+            new_args = ""
+            if arg:
+                args = arg.split(", ")
+                for i in args:
+                    new_args += i.strip('"').strip() + " "
+                    
+            new_line = "{} {} {}".format(command, __class, new_args)
+            return new_line
+        else:
+            return line
+
+
     def do_quit(self, line):
         return True
 
@@ -118,6 +150,7 @@ class HBNBCommand(cmd.Cmd):
             objects = storage.all()
             setattr(objects[key], args[2].strip('"'), args[3].strip('"'))
             storage.save()
+
 
 
 if __name__ == '__main__':
