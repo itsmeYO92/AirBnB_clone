@@ -47,16 +47,24 @@ class HBNBCommand(cmd.Cmd):
             return line
 
     def do_quit(self, line):
+        """ Quit the console """
         return True
 
     def emptyline(self):
         pass
 
     def do_EOF(self, line):
+        """ handles the EOF charachter """
         print()
         return True
 
     def do_create(self, line):
+        """
+            Creates an instance
+            Usage: create <class name>
+            E.g. create User
+            STDOUT: ID of the created instance
+        """
         if line == "" or line is None:
             print("** class name missing **")
         elif line not in self.classes.keys():
@@ -67,6 +75,12 @@ class HBNBCommand(cmd.Cmd):
             my_model.save()
 
     def do_show(self, line):
+        """
+            Shows an instance by ID
+            Usage: show <class name> <ID>
+            E.g. show City 1234-1234-1234
+            STDOUT: String representation of an instance
+        """
         if line == "" or line is None:
             print("** class name missing **")
             return
@@ -87,6 +101,11 @@ class HBNBCommand(cmd.Cmd):
             print('** no instance found **')
 
     def do_destroy(self, line):
+        """
+            Destroys an instance by ID
+            Usage: destroy <class name> <ID>
+            E.g. destroy User 1234-1234-1234
+        """
         if line == "" or line is None:
             print("** class name missing **")
             return
@@ -110,6 +129,16 @@ class HBNBCommand(cmd.Cmd):
             print('** no instance found **')
 
     def do_all(self, line):
+        """
+            Shows all instances
+            Usage: all <class name>
+                    class name is optional
+                    if no class name is provided it returns
+                    all instances regardless of the classe
+            E.g. all
+                 all User
+            STDOUT: all instances
+        """
         if line == "" or line is None:
             line = "all"
         args = line.split()
