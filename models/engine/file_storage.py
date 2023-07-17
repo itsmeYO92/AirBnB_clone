@@ -45,7 +45,7 @@ class FileStorage:
         classes = {"BaseModel": BaseModel, "User": User,
                    "State": State,
                    "City": City,
-                   "Amenity.py": Amenity,
+                   "Amenity": Amenity,
                    "Place": Place,
                    "Review": Review}
         try:
