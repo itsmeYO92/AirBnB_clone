@@ -1,0 +1,54 @@
+.filters {
+    background: white;
+    max-width: 1000px;
+    height: 70px;
+    width: 100%;
+    border: 1px #DDDDDD solid;
+    border-radius: 4px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center; 
+    padding-left: 7%;
+}
+
+.filters .locations {
+    height: 100%;
+    width: 25%;
+}
+
+.filters .amenities {
+    width: 25%;
+    margin-right: auto;
+    margin-left: 5%;
+    padding-left: 5%;
+    vertical-align: center;
+    border-left: 1px #DDDDDD solid;
+}
+
+
+.filters h3 {
+    font-weight: 600;
+}
+
+.filters h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.filters button {
+    font-size: 18px;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    height: 48px;
+    width: 20%;
+    border-radius: 4px;
+    border: none;
+    margin-right: 30px;
+    opacity: 100%;
+}
+
+.filters button:hover {
+    opacity: 90%;
+}
